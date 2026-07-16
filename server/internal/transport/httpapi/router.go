@@ -96,6 +96,12 @@ func NewRouterWithDeps(cfg config.Config, st *store.MemoryStore, deps Dependenci
 	protected.GET("/sales-orders", s.stockSales)
 	protected.POST("/sales-orders/:id/ship", s.stockShip)
 	protected.GET("/stock-movements", s.stockMovements)
+	// 费控领域别名：报销审批与付款确认复用统一幂等状态服务。
+	protected.GET("/expenses", s.stockPurchases)
+	protected.POST("/expenses/:id/approve", s.stockReceive)
+	protected.GET("/payments", s.stockSales)
+	protected.POST("/payments/:id/confirm", s.stockShip)
+	protected.GET("/expense-events", s.stockMovements)
 	protected.GET("/technicians", s.technicians)
 	workbench := protected.Group("/workbench")
 	workbench.Use(requireRoles("technician", "admin"))
@@ -626,5 +632,3 @@ func (s *Server) orderError(c *gin.Context, err error) {
 		s.envelope(c, http.StatusBadRequest, err.Error(), nil)
 	}
 }
-
-
