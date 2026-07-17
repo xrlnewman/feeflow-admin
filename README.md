@@ -1,6 +1,6 @@
 # FeeFlow Admin
 
-FeeFlow 是免费开源的企业费控后台与 Go Gin API，覆盖费用申请、发票归集、预算校验、审批、付款和费用分析。每次写操作都会记录状态事件与审计日志，重复提交使用 `Idempotency-Key` 安全重试。
+FeeFlow 是企业费控后台与 Go Gin API，覆盖费用申请、发票归集、预算校验、审批、付款和费用分析。每次写操作都会记录状态事件与审计日志，重复提交使用 `Idempotency-Key` 安全重试。
 
 ## 关联仓库
 
@@ -18,7 +18,7 @@ cd web && npm install && npm test && npm run build
 
 ## API 摘要
 
-所有接口返回 `{ code, message, data, traceId }`，写接口支持 `Idempotency-Key`。闭环：费用申请 → 发票归集 → 预算校验 → 多级审批 → 付款登记 → 月度分析。
+所有接口返回 `{ code, message, data, traceId }`，写接口支持 `Idempotency-Key`。费用状态依次为：费用申请 → 发票归集 → 预算校验 → 多级审批 → 付款登记 → 月度分析。
 
 | Method | URL | 用途 |
 | --- | --- | --- |
